@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование книг</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+.swal2-confirm {
+  background-color: #2e2b2b !important; /* Красный цвет кнопки */
+}
+
+
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden; /* Скрываем полосу прокрутки */
+            text-align: center;
+            
+        }
+
+        h2{
+            color: aliceblue;
+        }
+        
+        
+
+
+        .book-list,
+        .reserved-books {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .book-list {
+            background-color: #121213; /* Светлый фон */
+            
+        }
+
+        .reserved-books {
+            background-color: #36383a; /* Более темный фон */
+            width: 100%;
+    height: 100vh; /* Высота равна высоте окна браузера */
+    background-image: url('https://i.pinimg.com/originals/a3/f3/ab/a3f3abe546f87d7bceb19ff1f3eea602.gif'); /* Подставьте путь к своему изображению */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+    background-position: center center; /* Центрирование изображения */
+    background-size: cover; /* Растягивание изображения на весь контейнер */
+
+        }
+
+        .card {
+            margin: 15px; /* Отступы между карточками */
+            transition: transform 0.3s ease; /* Плавные анимации для карточек */
+            flex: 1;
+            min-width: 250px; /* Минимальная ширина карточки */
+            max-width: 300px; /* Максимальная ширина карточки */
+            background-color: #36383a;
+            color: white;
+            border-radius: 10px;
+            border: #ffffff solid 3px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Изменение при наведении */
+        }
+
+        .btn-reserve {
+            background-color: #272626; /* Цвет кнопки */
+            color: white; /* Цвет текста */
+        }
+
+        .btn-reserve:hover {
+            color: white;
+            background-color: #000000; /* Цвет кнопки при наведении */
+        }
+
+        .btn-take {
+            width: 100%; /* Полная ширина кнопки */
+            margin-top: auto; /* Располагаем кнопку внизу */
+            background-color: #000000;
+            border: #ffffff solid 1px;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .reserved-card {
+            margin: 15px; /* Отступы между забронированными карточками */
+            opacity: 0; /* Изначально невидимый */
+            animation: fadeIn 0.5s forwards; /* Анимация появления */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1; /* Полная видимость */
+            }
+        }
+        .fadeIn {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.fadeIn.show {
+    opacity: 1;
+}
+
+.btn0{
+    color: white;
+    border: #ffffff solid 1px;
+    margin-right: 100%;
+}
+
+    </style>
+</head>
+<body>
+    
+       
+    
+    <div class="book-list">
+        
+            <a href="book.html" class="btn0">Выйти</a>
+        
+
+        <h2>Доступные книги</h2>
+        <div class="d-flex flex-wrap justify-content-center">
+            <!-- 20 книг -->
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/938847/cover.png/242-0" alt="Призрак в желтой коляске">
+                <div class="card-body">
+                    <h5 class="card-title">Призрак в желтой коляске</h5>
+                    <p class="card-text">Автор: Киплинг Редьярд Джозеф</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <!-- Добавьте столько книг, сколько нужно -->
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/265321/cover.png/363-0" alt="Книга 2">
+                <div class="card-body">
+                    <h5 class="card-title">Смерть Вазир-Мухтара</h5>
+                    <p class="card-text">Автор: Тынянов Юрий Николаевич</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <!-- И так далее... -->
+
+
+
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/996858/cover.png/363-0" alt="Книга 3">
+                <div class="card-body">
+                    <h5 class="card-title">Хамелеон</h5>
+                    <p class="card-text">Автор: Чехов Антон Павлович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/877234/cover.png/363-0" alt="Книга 4">
+                <div class="card-body">
+                    <h5 class="card-title">Легенды и мифы Древней Греции</h5>
+
+                    <p class="card-text">Автор: Кун Николай Альбертович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/863341/cover.png/363-0" alt="Книга 5">
+                <div class="card-body">
+                    <h5 class="card-title">Обломов</h5>
+                    <p class="card-text">Автор: Гончаров Иван Александрович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/982364/cover.png/363-0" alt="Книга 6">
+                <div class="card-body">
+                    <h5 class="card-title">Багаж</h5>
+                    <p class="card-text">Автор: Хельфер Моника</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/918437/cover.png/363-0" alt="Книга 7">
+                <div class="card-body">
+                    <h5 class="card-title">Сказки</h5>
+                    <p class="card-text">Автор: Салтыков-Щедрин Михаил Евграфович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/875617/cover.png/363-0" alt="Книга 8">
+                <div class="card-body">
+                    <h5 class="card-title">Гиперболоид инженера Гарина</h5>
+                    <p class="card-text">Автор: Толстой Алексей Николаевич</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/932795/cover.png/363-0" alt="Книга 9">
+                <div class="card-body">
+                    <h5 class="card-title">Песнь гор</h5>
+                    <p class="card-text">Автор: Нгуен Фан Кюэ Май</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/369481/cover.png/363-0" alt="Книга 10">
+                <div class="card-body">
+                    <h5 class="card-title">Полное собрание трагедий в одном томе</h5>
+                    <p class="card-text">Автор: Еврипид</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/634514/cover.png/363-0" alt="Книга 11">
+                <div class="card-body">
+                    <h5 class="card-title">Женитьба. Игроки</h5>
+                    <p class="card-text">Автор: Гоголь Николай Васильевич</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/592045/cover.png/363-0" alt="Книга 12">
+                <div class="card-body">
+                    <h5 class="card-title">Венецианский купец</h5>
+                    <p class="card-text">Автор: Шекспир Уильям</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/644436/cover.png/363-0" alt="Книга 13">
+                <div class="card-body">
+                    <h5 class="card-title">Гамлет, принц датский</h5>
+                    <p class="card-text">Автор: Шекспир Уильям</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/969768/cover.jpg/363-0" alt="Книга 14">
+                <div class="card-body">
+                    <h5 class="card-title">Motion Picture Masterpiece</h5>
+
+                    <p class="card-text">Автор: Hanks Tom</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/996358/cover.png/363-0" alt="Книга 15">
+                <div class="card-body">
+                    <h5 class="card-title">Дело о разных носках</h5>
+                    <p class="card-text">Автор: Чиркова Людмила Михайловна</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/683168/cover.png/363-0" alt="Книга 16">
+                <div class="card-body">
+                    <h5 class="card-title">Большое путешествие по планете Земля</h5>
+                    <p class="card-text">Автор: Фарндон Джон</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/979589/cover.png/363-0" alt="Книга 17">
+                <div class="card-body">
+                    <h5 class="card-title">Девушка из цветочной лодки</h5>
+                    <p class="card-text">Автор: Фейн Ларри</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/879852/cover.png/363-0" alt="Книга 18">
+                <div class="card-body">
+                    <h5 class="card-title">Обрыв</h5>
+                    <p class="card-text">Автор: Гончаров Иван Александрович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/990517/cover.png/363-0" alt="Книга 19">
+                <div class="card-body">
+                    <h5 class="card-title">Ребус профессора Персиянова</h5>
+                    <p class="card-text">Автор: Кудрякова Наталья Николаевна</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="https://imo10.labirint.ru/books/1012841/cover.png/363-0" alt="Книга 20">
+                <div class="card-body">
+                    <h5 class="card-title">Коза и великаны</h5>
+                    <p class="card-text">Автор: Востоков Станислав Владимирович</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="reserved-books">
+        <h2>Забронированные книги</h2>
+        <div id="reserved-list" class="d-flex flex-wrap justify-content-start"></div>
+        <button class="btn-take" onclick="takeBooks()">Забрать книги(у)</button>
+    </div>
+
+    <script>
+
+
+
+
+
+        function reserveBook(button) {
+            const card = button.closest('.card');
+            const reservedList = document.getElementById('reserved-list');
+
+            // Добавляем текстовую карточку в зарезервированные книги
+            const reservedCard = document.createElement('div');
+            reservedCard.className = 'card reserved-card';
+            reservedCard.innerHTML = `
+                <div class="card-body">
+                    
+                    <h5 class="card-title">${card.querySelector('.card-title').innerText}</h5>
+                    <p class="card-text">${card.querySelector('.card-text').innerText}</p>
+                    <button class="btn btn-danger" onclick="returnBook(this)">Вернуть</button>
+                </div>
+            `;
+            reservedList.appendChild(reservedCard);
+
+            // Убираем карточку из списка доступных книг
+            card.remove();
+        }
+
+        function returnBook(button) {
+            const reservedCard = button.closest('.card');
+            const bookList = document.querySelector('.d-flex');
+
+            // Создаем карточку для доступных книг
+            const originalCard = document.createElement('div');
+            originalCard.className = 'card';
+            originalCard.innerHTML = `
+                <img class="card-img-top" src="book1.jpg" alt="Книга 1"> <!-- укажите изображение по вашему выбору -->
+                <div class="card-body">
+                    <h5 class="card-title">${reservedCard.querySelector('.card-title').innerText}</h5>
+                    <p class="card-text">${reservedCard.querySelector('.card-text').innerText}</p>
+                    <button class="btn btn-reserve" onclick="reserveBook(this)">Забронировать</button>
+                </div>
+            `;
+
+            // Добавляем карточку обратно в список доступных книг
+            bookList.appendChild(originalCard);
+
+            // Убираем карточку из списка забронированных книг
+            reservedCard.remove();
+        }
+
+        function takeBooks() {
+            const reservedList = document.getElementById('reserved-list');
+            if (reservedList.children.length > 0) {
+                Swal.fire({
+        title: 'Привет, пользователь!',
+        text: 'Вы успешно забронировали книги(у). Книги в собранном виде можно будет забрать завтра по адресу: город Тверь, улица Хромова, дом 5. С собой надо будет забрать только паспорт!',
+        icon: 'success',
+        confirmButtonText: 'Вернутся на главную страницу',
+        heightAuto: false // Отключение автоматической подстройки высоты
+    }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = 'book.html'; // Ссылка на новую страницу
+        }
+      });
+                reservedList.innerHTML = ''; // Очищаем список забронированных книг
+            } else {
+                Swal.fire({
+        title: 'Привет, пользователь!',
+        text: 'К сожеленею вы не забронировали не какую книгу',
+        icon: 'error',
+        confirmButtonText: 'Сейчас забронирую!',
+        backdrop: false // Добавлен этот параметр
+      });
+            }
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

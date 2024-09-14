@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+
+        width: 100%;
+    height: 100vh; /* Высота равна высоте окна браузера */
+    background-image: url('https://i.pinimg.com/originals/a3/f3/ab/a3f3abe546f87d7bceb19ff1f3eea602.gif'); /* Подставьте путь к своему изображению */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+    background-position: center center; /* Центрирование изображения */
+    background-size: cover; /* Растягивание изображения на весь контейнер */
+
+    
+    }
+        .swal2-confirm {
+  background-color: #2e2b2b !important; /* Красный цвет кнопки */
+}
+    </style>
+</head>
+<body>
+    <script>
+    Swal.fire({
+        title: 'Привет, пользователь!',
+        text: ' Для того чтобы вернуть книгу в библиотеку, вам необходимо прибыть по адресу: город Тверь, улица Хромова, дом 5. Кроме этого, вам необходимо взять с собой паспорт!',
+        icon: 'info',
+        confirmButtonText: 'Выйти',
+        backdrop: true,
+        heightAuto: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = 'book.html'; // Ссылка на новую страницу
+        }
+      });
+      </script>
+</body>
+</html>

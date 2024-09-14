@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library - Login/Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cursor.js@0.2.5/dist/cursor.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+
+.swal2-confirm {
+  background-color: #2e2b2b !important; /* Красный цвет кнопки */
+}
+
+
+      @media screen and (min-width: 100%) {
+    html {
+        zoom: 125%;
+    }
+}
+
+      /* Reset some default styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Set up base styles */
+    body {
+        font-family: 'Merriweather', serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+
+        width: 100%;
+    height: 100vh; /* Высота равна высоте окна браузера */
+    background-image: url('https://i.pinimg.com/originals/a3/f3/ab/a3f3abe546f87d7bceb19ff1f3eea602.gif'); /* Подставьте путь к своему изображению */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+    background-position: center center; /* Центрирование изображения */
+    background-size: cover; /* Растягивание изображения на весь контейнер */
+
+    
+    }
+
+    
+    .container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 30px 0 30px 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        opacity: 0.95;
+    }
+    
+    .form-container {
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: #333;
+
+    }
+    
+    .tab-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+    
+    .tab-btn {
+        background-color: #f0f0f0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    .tab-btn.active {
+        background-color: #333;
+        color: #fff;
+    }
+    
+    .tab-pane {
+        display: none;
+    }
+    
+    .tab-pane.active {
+        display: block;
+    }
+    
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    button:hover {
+        background-color: #555;
+    }
+    /* (existing CSS code) */
+
+.language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.lang-btn {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.lang-btn.active {
+    background-color: #555;
+}
+
+
+
+.title{
+  font-size: 30px;
+  margin-bottom: 100px;
+}
+
+
+.success-message, .error-message {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e0ffe0;
+    border: 1px solid #b0ffb0;
+    border-radius: 5px;
+    animation: fadeIn 0.5s linear;
+}
+.error-message {
+    background-color: #ffe0e0;
+    border: 1px solid #ffb0b0;
+}
+.checkmark {
+    color: green;
+    font-size: 20px;
+}
+.error-message .cross {
+    color: red;
+    font-size: 20px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+
+
+
+    .success-message, .error-message {
+        display: none;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e0ffe0;
+        border: 1px solid #b0ffb0;
+        border-radius: 5px;
+        animation: fadeIn 0.5s linear;
+    }
+    .error-message {
+        background-color: #ffe0e0;
+        border: 1px solid #ffb0b0;
+    }
+    .checkmark {
+        color: green;
+        font-size: 20px;
+    }
+    .error-message .cross {
+        color: red;
+        font-size: 20px;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+
+
+
+
+
+
+
+
+    </style>
+  </head>
+<body>
+  <div class="container">
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+    <div class="form-container">
+        <h1 class="title">Welcome to the Library Library Plus</h1>
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="register">Register</button>
+        </div>
+        <div class="tab-content">
+            <form class="login-form tab-pane active" id="login-form">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <form class="register-form tab-pane" id="register-form">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" class="submit-btn">Register</button>
+                
+                <div class="success-message" style="display: none;">
+                    <span class="checkmark">✔</span>
+                    <p>Вы успешно заригестрированы!</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+      
+  
+<script>
+
+Swal.fire({
+        title: 'Привет, пользователь!',
+        text: 'Это администрация библиотеки, для бронирования книг необходимо вам дать разрешения к госуслугам для получения паспортных данных, это делается с целью защиты имущества библиотеки от краж, в случае если вы не вернёте книгу больше года, администрация вынуждена будет поставить штраф в размере 5000 рублей.',
+        icon: 'success',
+        confirmButtonText: 'Соглашаюсь с требованием админстрацы!',
+        backdrop: false // Добавлен этот параметр
+      });
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      const langButtons = document.querySelectorAll('.lang-btn');
+      const titleElement = document.querySelector('.title');
+      const submitButtons = document.querySelectorAll('.submit-btn');
+  
+      const translations = {
+          en: {
+              title: 'Welcome to the Library Library Plus',
+              loginBtn: 'Login',
+              registerBtn: 'Register',
+              loginPlaceholder: 'Email',
+              passwordPlaceholder: 'Password',
+              loginSubmit: 'Login',
+              registerPlaceholder1: 'Username',
+              registerPlaceholder2: 'Email',
+              registerPlaceholder3: 'Password',
+              registerPlaceholder4: 'Confirm Password',
+              registerSubmit: 'Register'
+          },
+          ru: {
+              title: 'Добро пожаловать в библиотеку Library Plus',
+              loginBtn: 'Войти',
+              registerBtn: 'Зарегистрироваться',
+              loginPlaceholder: 'Электронная почта',
+              passwordPlaceholder: 'Пароль',
+              loginSubmit: 'Войти',
+              registerPlaceholder1: 'Имя пользователя',
+              registerPlaceholder2: 'Электронная почта',
+              
+            registerPlaceholder3: 'Пароль',
+            registerPlaceholder4: 'Подтвердите пароль',
+            registerSubmit: 'Зарегистрироваться'
+        }
+    };
+
+    let currentLanguage = 'en';
+    let userData = null;
+
+    function updateUI(lang) {
+        titleElement.textContent = translations[lang].title;
+        tabButtons[0].textContent = translations[lang].loginBtn;
+        tabButtons[1].textContent = translations[lang].registerBtn;
+        document.querySelector('input[name="email"]').placeholder = translations[lang].loginPlaceholder;
+        document.querySelector('input[name="password"]').placeholder = translations[lang].passwordPlaceholder;
+        document.querySelector('input[name="username"]').placeholder = translations[lang].registerPlaceholder1;
+        document.querySelector('input[name="email"]').placeholder = translations[lang].registerPlaceholder2;
+        document.querySelector('input[name="password"]').placeholder = translations[lang].registerPlaceholder3;
+        document.querySelector('input[name="confirmPassword"]').placeholder = translations[lang].registerPlaceholder4;
+        document.querySelector('.register-form .submit-btn').textContent = translations[lang].registerSubmit;
+        document.querySelector('.login-form .submit-btn').textContent = translations[lang].loginSubmit;
+    }
+
+    langButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            langButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentLanguage = button.dataset.lang;
+            updateUI(currentLanguage);
+        });
+    });
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tab = button.dataset.tab;
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            button.classList.add('active');
+            document.querySelector(`#${tab}-form`).classList.add('active');
+        });
+    });
+
+    document.querySelector("#register-form").addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const confirmPassword = e.target.confirmPassword.value;
+
+        if (password === confirmPassword) {
+            userData = { username, email, password };
+            document.querySelector('.success-message').style.display = 'block';
+            e.target.reset();
+            Swal.fire({
+        title: 'Привет, пользователь!',
+        text: 'Вы успешно заригестрированы!',
+        icon: 'success',
+        confirmButtonText: 'Закрыть',
+        heightAuto: false // Отключение автоматической подстройки высоты
+      });
+        } else {
+            alert("Passwords do not match!");
+        }
+    });
+
+    document.querySelector("#login-form").addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        if (userData && userData.email === email && userData.password === password) {
+            window.location.href = 'book.html';
+        } else {
+          Swal.fire({
+        title: 'Привет, пользователь!',
+        text: 'Вы не правильно указали эл.почту или пароль',
+        icon: 'error',
+        confirmButtonText: 'Попробывать снова',
+        heightAuto: false // Отключение автоматической подстройки высоты
+      });
+        }
+    });
+
+    updateUI(currentLanguage);
+});
+</script>
+
+
+</body>
+</html>
